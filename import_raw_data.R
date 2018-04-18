@@ -29,4 +29,6 @@ colnames(dataset)
 #there are many that are labeled as X.1-X.419...what are these?
 #then EA and EY at the end...these look real
 
-
+#look at the end to make sure they are all legit
+tail(dataset)
+#they look fine, minus those weird X columns
