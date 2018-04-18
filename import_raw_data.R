@@ -24,4 +24,9 @@ dataset <- ldply(file_list, read.csv, header=TRUE, sep=",")
 summary(dataset$GC)
 #roughly ~600 yes's, but this field needs to be cleaned...many weird ones in here
 
+#489 variables looks like a lot...let's look at all field (column) names
+colnames(dataset)
+#there are many that are labeled as X.1-X.419...what are these?
+#then EA and EY at the end...these look real
+
 
