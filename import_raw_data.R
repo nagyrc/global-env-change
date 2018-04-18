@@ -1,25 +1,23 @@
 #Global Env Change Research at CU Boulder
-
-#start by importing .csv files
-#import all files in folder
-#change working directory
-#setwd("data/")
-
-#setwd("/Users/rana7082/Dropbox/global-env-change/")
-#getwd()
-file_list <- list.files("data/")  
-
-
-numfiles <- length(file_list)
+#R. Chelsea Nagy
 
 
 library(plyr)
+
+#check current working directory
+getwd()
+
+#set working directory
+setwd("data/")
+
+#make a list of all the individual data files in sub-directory
+file_list <- list.files()  
+
+#check the number of files
+numfiles <- length(file_list)
+
+#read in and merge all data files
 dataset <- ldply(file_list, read.csv, header=TRUE, sep=",")
 
 
 
-
-
-
-
-#then stack them all in large dataframe
