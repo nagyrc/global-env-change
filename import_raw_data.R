@@ -20,5 +20,8 @@ numfiles <- length(file_list)
 #read in and merge all data files
 dataset <- ldply(file_list, read.csv, header=TRUE, sep=",")
 
+#sort by those that Caelan grouped into related to GEC or not
+summary(dataset$GC)
+#roughly ~600 yes's, but this field needs to be cleaned...many weird ones in here
 
 
