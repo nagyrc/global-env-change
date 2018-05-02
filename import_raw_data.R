@@ -50,3 +50,6 @@ data2<-dataset[,-grep(pattern="^X.", colnames(dataset))]
 
 colnames(data2)
 #check this against column names to make sure I didn't delete any real info.
+#GC is a column that Caelan added- his designation of related to global change or not
+
+head(data2)
