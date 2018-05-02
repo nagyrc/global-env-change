@@ -21,10 +21,11 @@ numfiles <- length(file_list)
 dataset <- ldply(file_list, read.csv, header=TRUE, sep=",")
 
 ###
+#this is a check; do not need to run every time
 #look at the set up in the first .csv file
-Abbott<-read.csv("001AbbottLD.csv", header = TRUE, sep = ",", fill = TRUE)
+#Abbott<-read.csv("001AbbottLD.csv", header = TRUE, sep = ",", fill = TRUE)
 
-head(Abbott)
+#head(Abbott)
 ###
 
 
