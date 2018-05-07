@@ -24,7 +24,6 @@ dataset <- ldply(file_list, read.csv, header=TRUE, sep=",")
 #this is a check; do not need to run every time
 #look at the set up in the first .csv file
 #Abbott<-read.csv("001AbbottLD.csv", header = TRUE, sep = ",", fill = TRUE)
-
 #head(Abbott)
 ###
 
@@ -46,6 +45,8 @@ head(dataset)
 tail(dataset)
 #they look fine, minus those weird X columns
 
+
+###cleaning the data
 #drop the weird X columns
 data2<-dataset[,-grep(pattern="^X.", colnames(dataset))]
 
@@ -54,3 +55,18 @@ colnames(data2)
 #GC is a column that Caelan added- his designation of related to global change or not
 
 head(data2)
+
+#cleaning GC column
+str(data2$GC)
+gsub("Yes", "YES",data2$GC, ignore.case=TRUE)
+gsub("Yes?", "YES",data2$GC, ignore.case=TRUE)
+gsub("Yes ", "YES",data2$GC, ignore.case=TRUE)
+summary(data2$GC)
+
+gsub("old", "OLD",data2$GC, ignore.case=TRUE)
+
+gsub("maybe", "MAYBE",data2$GC, ignore.case=TRUE)
+gsub("Maybe?", "MAYBE",data2$GC, ignore.case=TRUE)
+gsub("t", "MAYBE",data2$GC, ignore.case=TRUE)
+
+gsub("Nope", "NOPE",data2$GC, ignore.case=TRUE)
