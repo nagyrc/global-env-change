@@ -4,6 +4,7 @@
 
 
 library(plyr)
+library(tidyverse)
 
 #check current working directory
 getwd()
@@ -62,10 +63,20 @@ str(data2$GC)
 data2$GCC<-as.character(data2$GC)
 is.character(data2$GCC)
 
-library(tidyverse)
 cleaned <- data2 %>%
-  mutate(GCC = ifelse(GC == 'Yes' | GC == 'Yes ' | GC == 'yes' | GC == 'yes?' | GC == 'Yes?', 'YES',
+  mutate(GCC = ifelse(GC == 'Yes' | GC == 'Yes ' | GC == 'yes' | GC == 'yes?' | GC == 'Yes?'| GC == 'YEs', 'YES',
                       ifelse(GC == 'old', 'OLD',
-                             ifelse(GC == ' ' | GC == 'maybe' | GC == 'Maybe?' | GC == 't', 'MAYBE',
+                             ifelse(GC == ' ' | GC == '' | GC == 'maybe' | GC == 'Maybe' | GC == 'Maybe?' | GC == 't', 'MAYBE',
                                     ifelse(GC == 'Nope' | GC == 'NOPE', 'NO', as.character(GC))))))
 
+sum(cleaned$GCC=="YES")
+#614
+sum(cleaned$GCC=="NO")
+#3545
+sum(cleaned$GCC=="MAYBE")
+#6
+sum(cleaned$GCC=="OLD")
+#9821
+
+unique(cleaned$GCC)
+#now it only has yes, no, old, and maybe
