@@ -54,26 +54,18 @@ colnames(data2)
 #check this against column names to make sure I didn't delete any real info.
 #GC is a column that Caelan added- his designation of related to global change or not
 
+summary(data2$GC)
 head(data2)
 
 #cleaning GC column
 str(data2$GC)
 data2$GCC<-as.character(data2$GC)
 is.character(data2$GCC)
-gsub("Yes", "YES",data2$GCC, ignore.case = TRUE)
-gsub("Yes?", "YES",data2$GCC, ignore.case=TRUE)
-gsub("Yes ", "YES",data2$GCC, ignore.case=TRUE)
 
-gsub("old", "OLD",data2$GCC, ignore.case=TRUE)
+library(tidyverse)
+cleaned <- data2 %>%
+  mutate(GCC = ifelse(GC == 'Yes' | GC == 'Yes ' | GC == 'yes' | GC == 'yes?' | GC == 'Yes?', 'YES',
+                      ifelse(GC == 'old', 'OLD',
+                             ifelse(GC == ' ' | GC == 'maybe' | GC == 'Maybe?' | GC == 't', 'MAYBE',
+                                    ifelse(GC == 'Nope' | GC == 'NOPE', 'NO', as.character(GC))))))
 
-gsub("maybe", "MAYBE",data2$GCC, ignore.case=TRUE)
-gsub("Maybe?", "MAYBE",data2$GCC, ignore.case=TRUE)
-gsub("t", "MAYBE",data2$GCC, ignore.case=TRUE)
-
-gsub("Nope", "NO",data2$GCC, ignore.case=TRUE)
-gsub("NOPE", "NO",data2$GCC, ignore.case=TRUE)
-sum(data2$GCC == "Yes")
-
-#this worked, but need to do it multiple times...
-data2$GCC <- mapply(gsub, pattern = "Yes",replacement = "YES", data2$GC)
-sum(data2$GCC == "Yes")
