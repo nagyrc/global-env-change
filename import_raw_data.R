@@ -58,15 +58,22 @@ head(data2)
 
 #cleaning GC column
 str(data2$GC)
-gsub("Yes", "YES",data2$GC, ignore.case=TRUE)
-gsub("Yes?", "YES",data2$GC, ignore.case=TRUE)
-gsub("Yes ", "YES",data2$GC, ignore.case=TRUE)
-summary(data2$GC)
+data2$GCC<-as.character(data2$GC)
+is.character(data2$GCC)
+gsub("Yes", "YES",data2$GCC, ignore.case = TRUE)
+gsub("Yes?", "YES",data2$GCC, ignore.case=TRUE)
+gsub("Yes ", "YES",data2$GCC, ignore.case=TRUE)
 
-gsub("old", "OLD",data2$GC, ignore.case=TRUE)
+gsub("old", "OLD",data2$GCC, ignore.case=TRUE)
 
-gsub("maybe", "MAYBE",data2$GC, ignore.case=TRUE)
-gsub("Maybe?", "MAYBE",data2$GC, ignore.case=TRUE)
-gsub("t", "MAYBE",data2$GC, ignore.case=TRUE)
+gsub("maybe", "MAYBE",data2$GCC, ignore.case=TRUE)
+gsub("Maybe?", "MAYBE",data2$GCC, ignore.case=TRUE)
+gsub("t", "MAYBE",data2$GCC, ignore.case=TRUE)
 
-gsub("Nope", "NOPE",data2$GC, ignore.case=TRUE)
+gsub("Nope", "NO",data2$GCC, ignore.case=TRUE)
+gsub("NOPE", "NO",data2$GCC, ignore.case=TRUE)
+sum(data2$GCC == "Yes")
+
+#this worked, but need to do it multiple times...
+data2$GCC <- mapply(gsub, pattern = "Yes",replacement = "YES", data2$GC)
+sum(data2$GCC == "Yes")
