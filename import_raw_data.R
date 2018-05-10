@@ -17,7 +17,7 @@ setwd("data/")
 file_list <- list.files()  
 
 #check the number of files
-numfiles <- length(file_list)
+#numfiles <- length(file_list)
 
 
 #OPTION 1
@@ -45,12 +45,15 @@ imported_csv <- do.call(rbind, imported_csv)
 imported_csv$GCC<-as.character(imported_csv$GC)
 is.character(imported_csv$GCC)
 
+unique(imported_csv$GCC)
+
 cleaned <- imported_csv %>%
-  mutate(GCC = ifelse(GC == 'Yes' | GC == 'Yes ' | GC == 'yes' | GC == 'yes?' | GC == 'Yes?'| GC == 'YEs', 'YES',
+  mutate(GCC = ifelse(GC == 'Yes' | GC == 'Yes ' | GC == 'yes' | GC == 'yes?' | GC == 'Yes?' | GC == 'YEs', 'YES',
                       ifelse(GC == 'old', 'OLD',
                              ifelse(GC == ' ' | GC == '' | GC == 'maybe' | GC == 'Maybe' | GC == 'Maybe?' | GC == 't', 'MAYBE',
                                     ifelse(GC == 'Nope' | GC == 'NOPE', 'NO', as.character(GC))))))
 
+unique(cleaned$GCC)
 sum(cleaned$GCC=="YES")
 #614
 sum(cleaned$GCC=="NO")
