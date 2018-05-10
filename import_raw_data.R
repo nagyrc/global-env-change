@@ -57,13 +57,13 @@ cleaned <- imported_csv %>%
                                     ifelse(GC == 'Nope' | GC == 'NOPE', 'NO', as.character(GC))))))
 
 unique(cleaned$GCC)
-sum(cleaned$GCC=="YES")
+sum(cleaned$GCC == "YES")
 #614
-sum(cleaned$GCC=="NO")
+sum(cleaned$GCC == "NO")
 #3545
-sum(cleaned$GCC=="MAYBE")
+sum(cleaned$GCC == "MAYBE")
 #6
-sum(cleaned$GCC=="OLD")
+sum(cleaned$GCC == "OLD")
 #9821
 
 unique(cleaned$GCC)
@@ -80,7 +80,7 @@ unique(cleaned$GCC)
 #read in and merge all data files
 dataset <- ldply(file_list, read.csv, header = TRUE, sep = ",")
 
-ccc<-colnames(dataset)
+ccc <- colnames(dataset)
 ccc
 
 ###
@@ -113,7 +113,7 @@ tail(dataset)
 
 ###cleaning the data
 #drop the weird X columns
-data2<-dataset[,-grep(pattern="^X.", colnames(dataset))]
+data2 <- dataset[,-grep(pattern="^X.", colnames(dataset))]
 
 colnames(data2)
 #check this against column names to make sure I didn't delete any real info.
@@ -124,7 +124,7 @@ head(data2)
 
 #cleaning GC column
 str(data2$GC)
-data2$GCC<-as.character(data2$GC)
+data2$GCC <- as.character(data2$GC)
 is.character(data2$GCC)
 
 cleaned <- data2 %>%
@@ -133,13 +133,13 @@ cleaned <- data2 %>%
                              ifelse(GC == ' ' | GC == '' | GC == 'maybe' | GC == 'Maybe' | GC == 'Maybe?' | GC == 't', 'MAYBE',
                                     ifelse(GC == 'Nope' | GC == 'NOPE', 'NO', as.character(GC))))))
 
-sum(cleaned$GCC=="YES")
+sum(cleaned$GCC == "YES")
 #614
-sum(cleaned$GCC=="NO")
+sum(cleaned$GCC == "NO")
 #3545
-sum(cleaned$GCC=="MAYBE")
+sum(cleaned$GCC == "MAYBE")
 #6
-sum(cleaned$GCC=="OLD")
+sum(cleaned$GCC == "OLD")
 #9821
 
 unique(cleaned$GCC)
