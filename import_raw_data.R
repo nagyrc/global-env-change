@@ -16,9 +16,6 @@ setwd("data/")
 #make a list of all the individual data files in sub-directory
 file_list <- list.files()  
 
-#check the number of files
-#numfiles <- length(file_list)
-
 
 #OPTION 1
 ###################################################
@@ -57,17 +54,10 @@ cleaned <- imported_csv %>%
                                     ifelse(GC == 'Nope' | GC == 'NOPE', 'NO', as.character(GC))))))
 
 unique(cleaned$GCC)
-sum(cleaned$GCC == "YES")
-#614
-sum(cleaned$GCC == "NO")
-#3545
-sum(cleaned$GCC == "MAYBE")
-#6
-sum(cleaned$GCC == "OLD")
-#9821
+#why are there still NAs?
 
-unique(cleaned$GCC)
-#now it only has yes, no, old, and maybe
+sum(cleaned$GCC == "YES")
+#this no longer works
 
 ###################################################
 
