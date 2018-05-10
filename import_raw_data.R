@@ -21,6 +21,22 @@ numfiles <- length(file_list)
 #read in and merge all data files
 dataset <- ldply(file_list, read.csv, header=TRUE, sep=",")
 
+###################################################
+###test with Nate's code to add field with part of file name
+#csv_list <- list.files(file.path(dir, csv_dir), full.names = TRUE, pattern = '.csv')
+
+imported_csv <- lapply(file_list,
+                       FUN = function(x) {
+                         
+                         input_name <- x
+                         
+                         imported <- read_csv(x) %>%
+                           mutate(file_names = x) 
+                       })
+
+###################################################
+
+
 ###
 #this is a check; do not need to run every time
 #look at the set up in the first .csv file
@@ -29,6 +45,8 @@ dataset <- ldply(file_list, read.csv, header=TRUE, sep=",")
 ###
 
 
+###
+#cleaning data
 #sort by those that Caelan grouped into related to GEC or not
 summary(dataset$GC)
 #roughly ~600 yes's, but this field needs to be cleaned...many weird ones in here
