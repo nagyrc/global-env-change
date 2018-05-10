@@ -5,6 +5,7 @@
 
 library(plyr)
 library(tidyverse)
+library(dplyr)
 
 #check current working directory
 getwd()
@@ -18,12 +19,14 @@ file_list <- list.files()
 #check the number of files
 numfiles <- length(file_list)
 
-#read in and merge all data files
-dataset <- ldply(file_list, read.csv, header=TRUE, sep=",")
 
+#OPTION 1
 ###################################################
 ###test with Nate's code to add field with part of file name
-#csv_list <- list.files(file.path(dir, csv_dir), full.names = TRUE, pattern = '.csv')
+
+#keep=c("GC", "PT", "AU", "BA", "BE", "GP", "AF", "BF", "CA", "TI", "SO", "SE", "BS", "LA", "DT", "CT", "CY", "CL", "SP", "HO", "DE", "ID", "AB", "C1", "RP", "EM", "RI", "OI", "FU", "FX", "CR", "NR", "TC", "Z9", "U1", "U2", "PU", "PI", "PA", "SN", "EI", "BN", "J9", "JI", "PD", "PY", "VL", "IS", "PN", "SU", "SI", "MA", "BP", "EP", "AR", "DI", "D2", "PG", "WC", "SC", "GA", "UT", "PM", "OA", "HC", "HP", "DA", "EA", "EY", "file_names")
+#it doesn't recognize "EA" and "EY" as columns...remove these and see if it works
+keep=c("GC", "PT", "AU", "BA", "BE", "GP", "AF", "BF", "CA", "TI", "SO", "SE", "BS", "LA", "DT", "CT", "CY", "CL", "SP", "HO", "DE", "ID", "AB", "C1", "RP", "EM", "RI", "OI", "FU", "FX", "CR", "NR", "TC", "Z9", "U1", "U2", "PU", "PI", "PA", "SN", "EI", "BN", "J9", "JI", "PD", "PY", "VL", "IS", "PN", "SU", "SI", "MA", "BP", "EP", "AR", "DI", "D2", "PG", "WC", "SC", "GA", "UT", "PM", "OA", "HC", "HP", "DA", "file_names")
 
 imported_csv <- lapply(file_list,
                        FUN = function(x) {
@@ -31,11 +34,48 @@ imported_csv <- lapply(file_list,
                          input_name <- x
                          
                          imported <- read_csv(x) %>%
-                           mutate(file_names = x) 
+                           mutate(file_names = x) %>%
+                           dplyr::select(keep)
                        })
+imported_csv <- do.call(rbind, imported_csv)
+
+
+
+#cleaning GC column
+imported_csv$GCC<-as.character(imported_csv$GC)
+is.character(imported_csv$GCC)
+
+cleaned <- imported_csv %>%
+  mutate(GCC = ifelse(GC == 'Yes' | GC == 'Yes ' | GC == 'yes' | GC == 'yes?' | GC == 'Yes?'| GC == 'YEs', 'YES',
+                      ifelse(GC == 'old', 'OLD',
+                             ifelse(GC == ' ' | GC == '' | GC == 'maybe' | GC == 'Maybe' | GC == 'Maybe?' | GC == 't', 'MAYBE',
+                                    ifelse(GC == 'Nope' | GC == 'NOPE', 'NO', as.character(GC))))))
+
+sum(cleaned$GCC=="YES")
+#614
+sum(cleaned$GCC=="NO")
+#3545
+sum(cleaned$GCC=="MAYBE")
+#6
+sum(cleaned$GCC=="OLD")
+#9821
+
+unique(cleaned$GCC)
+#now it only has yes, no, old, and maybe
 
 ###################################################
 
+
+
+
+
+######################################
+#OPTION 2
+#read in and merge all data files
+dataset <- ldply(file_list, read.csv, header = TRUE, sep = ",")
+
+ccc<-colnames(dataset)
+ccc
 
 ###
 #this is a check; do not need to run every time
