@@ -5,8 +5,10 @@
 library(plyr)
 library(tidyverse)
 
+setwd("data/")
+
 #make a list of all the individual data files in sub-directory
-file_list <- list.files("data/")  
+file_list <- list.files()  
 
 #OPTION 1
 ###################################################
