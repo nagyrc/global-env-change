@@ -41,3 +41,7 @@ unique(cleaned$GCC)
 
 cleaned[rowSums(is.na(cleaned)) != ncol(cleaned), ]
 #this should remove any rows that have all NAs...but no rows are removed
+
+unique(rowSums(is.na(cleaned)) == ncol(cleaned))
+#FALSE, so there are no rows that are all NAs
+
