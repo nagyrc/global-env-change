@@ -32,20 +32,14 @@ imported_csv <- do.call(rbind, imported_csv)
 
 
 #cleaning GC column
-unique(imported_csv$GC)
 imported_csv$GCC <- as.character(imported_csv$GC)
 is.character(imported_csv$GCC)
 
-str(imported_csv$GCC)
-
-unique(imported_csv$GCC)
-
+#this uses the helper function (clean_gc) that Nate created
 cleaned <- imported_csv %>%
   mutate(GCC = clean_gc(GC))
 
 unique(cleaned$GCC)
-#why are there still NAs?
+#there are still NAs because 2 rows have all NAs
 
-sum(cleaned$GCC == "YES")
-#this no longer works
 
