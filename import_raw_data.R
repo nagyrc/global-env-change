@@ -11,7 +11,6 @@ file_list <- list.files('data',
                         pattern = '.csv',
                         full.names = TRUE )  
 
-###################################################
 ###test with Nate's code to add field with part of file name
 
 #keep=c("GC", "PT", "AU", "BA", "BE", "GP", "AF", "BF", "CA", "TI", "SO", "SE", "BS", "LA", "DT", "CT", "CY", "CL", "SP", "HO", "DE", "ID", "AB", "C1", "RP", "EM", "RI", "OI", "FU", "FX", "CR", "NR", "TC", "Z9", "U1", "U2", "PU", "PI", "PA", "SN", "EI", "BN", "J9", "JI", "PD", "PY", "VL", "IS", "PN", "SU", "SI", "MA", "BP", "EP", "AR", "DI", "D2", "PG", "WC", "SC", "GA", "UT", "PM", "OA", "HC", "HP", "DA", "EA", "EY", "file_names")
@@ -29,17 +28,16 @@ imported_csv <- lapply(file_list,
                        })
 imported_csv <- do.call(rbind, imported_csv)
 
-
-
 #cleaning GC column
 imported_csv$GCC <- as.character(imported_csv$GC)
 is.character(imported_csv$GCC)
 
-#this uses the helper function (clean_gc) that Nate created
+#this uses the helper function (clean_gc) that Nate created and calls in source above
 cleaned <- imported_csv %>%
   mutate(GCC = clean_gc(GC))
 
 unique(cleaned$GCC)
-#there are still NAs because 2 rows have all NAs
+#there are still NAs because (2?) rows have all NAs
 
-
+cleaned[rowSums(is.na(cleaned)) != ncol(cleaned), ]
+#this should remove any rows that have all NAs...but no rows are removed
