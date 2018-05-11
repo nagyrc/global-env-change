@@ -4,6 +4,7 @@
 
 library(plyr)
 library(tidyverse)
+source('src/functions/helper_functions.R')
 
 #make a list of all the individual data files in sub-directory
 file_list <- list.files('data',
@@ -41,10 +42,7 @@ str(imported_csv$GCC)
 unique(imported_csv$GCC)
 
 cleaned <- imported_csv %>%
-  mutate(GCC = ifelse(GC == 'Yes' | GC == 'Yes ' | GC == 'yes' | GC == 'yes?' | GC == 'Yes?' | GC == 'YEs', 'YES',
-                      ifelse(GC == 'old', 'OLD',
-                             ifelse(GC == ' ' | GC == '' | GC == 'maybe' | GC == 'Maybe' | GC == 'Maybe?' | GC == 't' | is.na(GC), 'MAYBE',
-                                    ifelse(GC == 'Nope' | GC == 'NOPE', 'NO', as.character(GC))))))
+  mutate(GCC = clean_gc(GC))
 
 unique(cleaned$GCC)
 #why are there still NAs?
