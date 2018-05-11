@@ -2,20 +2,11 @@
 #R. Chelsea Nagy
 #April 18, 2018
 
-
 library(plyr)
 library(tidyverse)
-library(dplyr)
-
-#check current working directory
-getwd()
-
-#set working directory
-setwd("data/")
 
 #make a list of all the individual data files in sub-directory
-file_list <- list.files()  
-
+file_list <- list.files("data/")  
 
 #OPTION 1
 ###################################################
@@ -50,7 +41,7 @@ unique(imported_csv$GCC)
 cleaned <- imported_csv %>%
   mutate(GCC = ifelse(GC == 'Yes' | GC == 'Yes ' | GC == 'yes' | GC == 'yes?' | GC == 'Yes?' | GC == 'YEs', 'YES',
                       ifelse(GC == 'old', 'OLD',
-                             ifelse(GC == ' ' | GC == '' | GC == 'maybe' | GC == 'Maybe' | GC == 'Maybe?' | GC == 't' | GC == NA, 'MAYBE',
+                             ifelse(GC == ' ' | GC == '' | GC == 'maybe' | GC == 'Maybe' | GC == 'Maybe?' | GC == 't' | is.na(GC), 'MAYBE',
                                     ifelse(GC == 'Nope' | GC == 'NOPE', 'NO', as.character(GC))))))
 
 unique(cleaned$GCC)
