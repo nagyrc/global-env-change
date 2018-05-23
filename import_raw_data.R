@@ -28,15 +28,21 @@ imported_csv <- lapply(file_list,
                        })
 imported_csv <- do.call(rbind, imported_csv)
 
-#cleaning GC column
-imported_csv$GCC <- as.character(imported_csv$GC)
-is.character(imported_csv$GCC)
-
 #this uses the helper function (clean_gc) that Nate created and calls in source above
 cleaned <- imported_csv %>%
-  mutate(GCC = clean_gc(GC))
+  mutate(GCC = clean_gc(as.character(GC)))
 
+# Option 1 for removing the NAs
+# This would work if all rows were TRULY NAs but we added a column field during import so this will not work as intended
+na_remove <- apply(cleaned, 1, function(x) all(is.na(x)))
+
+df <- cleaned[!na_remove, ]
 unique(cleaned$GCC)
+
+test <-  head(cleaned, -4) 
+unique(test$GCC)
+
+
 #there are still NAs because (2?) rows have all NAs
 
 cleaned[rowSums(is.na(cleaned)) != ncol(cleaned), ]
