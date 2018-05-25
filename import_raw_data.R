@@ -44,5 +44,6 @@ cleaned <- imported_csv %>%
 
 unique(cleaned$GCC)
 
+#write the combined .csv file with all 13,984 abstracts
 write.csv(cleaned, file = 'output/all_records.csv')
 
