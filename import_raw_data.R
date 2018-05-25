@@ -32,6 +32,9 @@ imported_csv <- do.call(rbind, imported_csv)
 cleaned <- imported_csv %>%
   mutate(GCC = clean_gc(as.character(GC)))
 
+unique(cleaned$GCC)
+
+#shouldn't need this code below now
 # Option 1 for removing the NAs
 # This would work if all rows were TRULY NAs but we added a column field during import so this will not work as intended
 na_remove <- apply(cleaned, 1, function(x) all(is.na(x)))
@@ -43,11 +46,4 @@ test <-  head(cleaned, -4)
 unique(test$GCC)
 
 
-#there are still NAs because (2?) rows have all NAs
-
-cleaned[rowSums(is.na(cleaned)) != ncol(cleaned), ]
-#this should remove any rows that have all NAs...but no rows are removed
-
-unique(rowSums(is.na(cleaned)) == ncol(cleaned))
-#FALSE, so there are no rows that are all NAs
 
