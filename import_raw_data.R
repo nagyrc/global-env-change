@@ -44,5 +44,5 @@ cleaned <- imported_csv %>%
 
 unique(cleaned$GCC)
 
-
+write.csv(cleaned, file = 'output/all_records.csv')
 
