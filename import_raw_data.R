@@ -50,6 +50,9 @@ write.csv(cleaned, file = 'output/all_records.csv')
 head(cleaned)
 head(imported_csv)
 
+
+###########################
+#to check to see who of the potential list were actually downloaded
 list1 <- substring(file_list, 9)
 list1b <- str_sub(list1, 1, str_length(list1)-4)
 list1c <- as.data.frame(list1b)
@@ -83,17 +86,5 @@ diff <- setdiff(list2o$combo, list1c$combo)
 
 diff
 
-#######################
-library(dplyr)
-anti_join(list1c$combo, list2$combo, by = "combo")
+###########################
 
-str(list1c)
-list1d <- as.character(list1c)
-is.character(list1d)
-
-list2$combo <- as.factor(list2$combo)
-
-is.factor(list2$combo)
-is.factor(list1c$combo)
-
-test <- table1[is.na(match(list1c$combo,list2$combo)),]
