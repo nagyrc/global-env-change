@@ -60,16 +60,23 @@ head(list2)
 
 list2$initial <- str_sub(list2$`First name`, 1, 1)
 list2$middle <- sub("\\s+\\S+$", '', list2$`First name`)
+list2$middle2 <-  sub(".* ", "", list2$`First name`)
+list2$middle2b <- str_sub(list2$middle2, 1, 1)
 
-list2$combo <- paste (list2$`Last name`, list2$initial, sep = "")
-
-list2b <- as.list(list2$combo)
-
-diff <- setdiff(list2$combo, list1c$combo)
+#list2$combo <- paste (list2$`Last name`, list2$initial, list2$middle2b, sep = "")
 
 str(list1c)
 str(list2)
 list2$combo
+
+list2$middle2c <-  ifelse(str_detect(list2$`First name`, " "), sub(".* ", "", list2$`First name`), "")
+list2$middle2d <- str_sub(list2$middle2c, 1, 1)
+
+list2$combo <- paste (list2$`Last name`, list2$initial, list2$middle2d, sep = "")
+
+diff <- setdiff(list2$combo, list1c$combo)
+408 - 225
+#183
 
 
 
