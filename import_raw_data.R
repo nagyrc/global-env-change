@@ -47,3 +47,44 @@ unique(cleaned$GCC)
 #write the combined .csv file with all 13,984 abstracts
 write.csv(cleaned, file = 'output/all_records.csv')
 
+head(cleaned)
+head(imported_csv)
+
+list1 <- substring(file_list, 9)
+list1b <- str_sub(list1, 1, str_length(list1)-4)
+list1c <- as.data.frame(list1b)
+colnames(list1c)[colnames(list1c) == 'list1b'] <- 'combo'
+
+list2  <- as.data.frame(read_csv("data/list2.csv"))
+head(list2)
+
+list2$initial <- str_sub(list2$`First name`, 1, 1)
+list2$middle <- sub("\\s+\\S+$", '', list2$`First name`)
+
+list2$combo <- paste (list2$`Last name`, list2$initial, sep = "")
+
+list2b <- as.list(list2$combo)
+
+diff <- setdiff(list2$combo, list1c$combo)
+
+str(list1c)
+str(list2)
+list2$combo
+
+
+
+
+#######################
+library(dplyr)
+anti_join(list1c$combo, list2$combo, by = "combo")
+
+str(list1c)
+list1d <- as.character(list1c)
+is.character(list1d)
+
+list2$combo <- as.factor(list2$combo)
+
+is.factor(list2$combo)
+is.factor(list1c$combo)
+
+test <- table1[is.na(match(list1c$combo,list2$combo)),]
