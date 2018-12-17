@@ -72,14 +72,14 @@ list2$combo
 list2$middle2c <-  ifelse(str_detect(list2$`First name`, " "), sub(".* ", "", list2$`First name`), "")
 list2$middle2d <- str_sub(list2$middle2c, 1, 1)
 
-list2$combo <- paste (list2$`Last name`, list2$initial, list2$middle2d, sep = "")
+list2$combo <- paste(list2$`Last name`, list2$initial, list2$middle2d, sep = "")
 
 diff <- setdiff(list2$combo, list1c$combo)
 408 - 225
 #183
 
 
-
+diff
 
 #######################
 library(dplyr)
