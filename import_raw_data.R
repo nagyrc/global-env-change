@@ -74,9 +74,11 @@ list2$middle2d <- str_sub(list2$middle2c, 1, 1)
 
 list2$combo <- paste(list2$`Last name`, list2$initial, list2$middle2d, sep = "")
 
-diff <- setdiff(list2$combo, list1c$combo)
+list2o <- list2[order(list2$combo),] 
+
+diff <- setdiff(list2o$combo, list1c$combo)
 408 - 225
-#183
+#183, but there are 264 in this list...some of these are from folks with suffixes (e.g., III)
 
 
 diff
