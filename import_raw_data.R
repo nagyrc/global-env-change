@@ -58,7 +58,7 @@ list1b <- str_sub(list1, 1, str_length(list1)-4)
 list1c <- as.data.frame(list1b)
 colnames(list1c)[colnames(list1c) == 'list1b'] <- 'combo'
 
-list2  <- as.data.frame(read_csv("data/list2.csv"))
+list2  <- as.data.frame(read_csv("output/list2.csv"))
 head(list2)
 
 list2$initial <- str_sub(list2$`First name`, 1, 1)
@@ -84,13 +84,15 @@ names(pulled)[1] <- "combo"
 
 diff <- setdiff(experts$combo, pulled$combo)
 408 - 225
-#183, but there are 264 in this list...some of these are from folks with suffixes (e.g., III)
+#183, but there are 263 in this list...some of these are from folks with suffixes (e.g., III)
 diff
+
+write.csv(diff, file = 'output/diff.csv')
 
 added <- setdiff(pulled$combo, experts$combo)
 added
+#81...where did these come from if they weren't on our CU experts list?!?
 
-
-
+write.csv(added, file = 'output/added.csv')
 ###########################
 
