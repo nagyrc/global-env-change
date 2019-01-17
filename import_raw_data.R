@@ -79,6 +79,8 @@ list2$combo <- paste(list2$`Last name`, list2$initial, list2$middle2d, sep = "")
 
 experts <- list2[order(list2$combo),] 
 pulled <- as.data.frame(list1c[order(list1c$combo),])
+write.csv(experts, file = 'output/experts.csv')
+write.csv(pulled, file = 'output/pulled.csv')
 
 names(pulled)[1] <- "combo"
 
