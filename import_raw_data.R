@@ -43,6 +43,10 @@ cleaned <- imported_csv %>%
   mutate(GCC = clean_gc(as.character(GC)))
 
 unique(cleaned$GCC)
+journals <- unique(cleaned$SO)
+journals_count <- as.data.frame(table(cleaned$SO))
+
+write.csv(journals_count, file = 'output/journals_count.csv')
 
 #write the combined .csv file with all 13,984 abstracts
 write.csv(cleaned, file = 'output/all_records.csv')
